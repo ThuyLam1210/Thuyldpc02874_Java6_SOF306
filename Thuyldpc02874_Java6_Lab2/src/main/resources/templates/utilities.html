@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <!-- Chèn Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-pzjw8t/jV8Net3zY3R6Zf6+RvPto5z79e3j5B4Z5tiXjWs/0q91uozBhP2zLT7f4"
+        crossorigin="anonymous">
+
+</head>
+
+<body>
+    <h3>Utilities Objects</h3>
+    <b>Tổng hợp</b>
+    <ul>
+        <li>
+            Today: <i th:text="${#dates.format(now, 'EEEEEEEEE, dd-MM-yyyy')}"></i>
+        </li>
+        <!-- <li>Number of students: <i th:text="${dssv.size()}"></i></li> -->
+        <li>Number of students: <i th:text="${#lists.size(dssv)}"></i></li>
+    </ul>
+    <b>Danh sách</b>
+    <ul th:each="sv : ${dssv}" th:object="${sv}">
+        <li>Name: <b th:text="*{#strings.capitalizeWords(name)}"></b></li>
+        <li>
+            Marks:
+            <b th:text="*{#numbers.formatDecimal(marks, 0, 'COMMA', 2, 'POINT')}"></b>
+        </li>
+        <li>
+            Number of subjects:
+            <b th:text="*{#arrays.length(subjects)}"></b>
+        </li>
+    </ul>
+
+    <!-- Chèn Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"
+        integrity="sha384-JNpVvU4zOJ7Yv+NRuSd9/XGJQWrtpdudO1L1vZ9ElJPDnKrM1KE4z3tiAAtzB+e8"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-9aIt2qNp9cP1giK2rBbPvFZd8N6+sdd8+8n90v3C9RO9z+1Rz/voe7bNHqvj/m2"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

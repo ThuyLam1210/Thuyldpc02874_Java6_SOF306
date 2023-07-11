@@ -1,0 +1,14 @@
+{
+    "name": "Thúy Lina",
+    "gender": false,
+    "marks": 7.5,
+    "contact": {
+        "email": "thuyldpc02874@fpt.edu.vn",
+        "phone": "0337845364",
+        "address": null
+    },
+    "subjects": [
+        "WEB205",
+        "SOF306"
+    ]
+}

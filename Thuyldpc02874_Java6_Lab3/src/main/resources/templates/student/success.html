@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org" th:replace="~{/layout/layout.html :: dynamic(~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Thêm liên kết tới Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h3>Result</h3>
+        <form th:object="${sv}" class="needs-validation" novalidate>
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" class="form-control" id="email" th:field="*{email}" required>
+                <div class="invalid-feedback">
+                    Please provide a valid email address.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="fullname">Fullname:</label>
+                <input type="text" class="form-control" id="fullname" th:field="*{fullname}" required>
+                <div class="invalid-feedback">
+                    Please provide a fullname.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="marks">Average Marks:</label>
+                <input type="number" class="form-control" id="marks" th:field="*{marks}" required>
+                <div class="invalid-feedback">
+                    Please provide average marks.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select class="form-control" id="gender" th:field="*{gender}" required>
+                    <option value="true">Male</option>
+                    <option value="false">Female</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please select a gender.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <input type="text" class="form-control" id="country" th:field="*{country}" required>
+                <div class="invalid-feedback">
+                    Please provide a country.
+                </div>
+            </div>	<br>
+       
+        </form>
+    </div>
+
+    <!-- Thêm liên kết tới Bootstrap JavaScript và jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

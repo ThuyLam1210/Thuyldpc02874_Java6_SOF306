@@ -1,0 +1,11 @@
+{
+    "name": "Lâm Diễm Thúy",
+    "gender": false,
+    "marks": 7.5,
+    "subjects": ["WEB205", "SOF301"],
+    "contact":{
+        "email": "Thuyldpc02874@gmail.com",
+        "phone":"09***********",
+        "address": "Bạc Liêu"
+    }
+}

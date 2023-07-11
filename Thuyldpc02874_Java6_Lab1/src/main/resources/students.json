@@ -1,0 +1,55 @@
+[
+	{
+		"name": "Hồ Thị Vân Anh",
+		"gender": false,
+		"marks": 7.5,
+		"subjects": [
+			"WEB205",
+			"SOF301"
+		],
+		"contact": {
+			"email": "anhhtvpc02834@fpt.edu.vn",
+			"phone": "0338478977"
+		}
+	},
+	{
+		"name": "Lâm Diễm Thúy",
+		"gender": false,
+		"marks": 7.5,
+		"subjects": [
+			"WEB205",
+			"SOF301"
+		],
+		"contact": {
+			"email": "Thuyldpc02874@gmail.com",
+			"phone": "09***********",
+			"address": "Bạc Liêu"
+		}
+	},
+	{
+		"name": "Mai Quốc Bảo",
+		"gender": true,
+		"marks": 10,
+		"subjects": [
+			"WEB205",
+			"SOF301"
+		],
+		"contact": {
+			"email": "maiquocbao@fpt.edu.vn",
+			"phone": "0338478977"
+		}
+	},
+	{
+		"name": "Nguyễn Minh Thức",
+		"gender": true,
+		"marks": 8.0,
+		"subjects": [
+			"WEB205",
+			"SOF301"
+		],
+		"contact": {
+			"email": "minhthuc4@fpt.edu.vn",
+			"phone": "0338478977"
+		}
+	}
+]

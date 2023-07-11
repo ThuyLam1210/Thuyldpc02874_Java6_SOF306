@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var sv={
+        	
+      	  "name": "Lâm Diễm Thúy",
+            "gender": false,
+            "marks": 7.5,
+            "contact": {
+                "email": "Thuyldpc02874@gmail.com",
+                "phone": "09*********981"
+            },
+            "subjects": ["WEB205", "SOF306"]
+        }
+
+        //Xuất đối tượng
+        console.log(sv);
+
+        //Truy xuất thuộc tính
+        sv.name = sv['name'].toUpperCase();
+        console.log(sv.name, sv.contact.email, sv.subjects[1])
+
+        //Duyệt đối tượng theo key
+        for(var key in sv){
+            console.log(key, sv[key])
+        }
+
+        //Chuyển đổi đối tượng JSON sang kiểu chuỗi
+        var text = JSON.stringify(sv)
+        console.log(text)
+
+        //Chuyển đổi kiểu chuỗi sang đối tượng JSON
+        var obj = JSON.parse(text);
+        console.log(obj, obj.name)
+    </script>
+</body>
+</html>

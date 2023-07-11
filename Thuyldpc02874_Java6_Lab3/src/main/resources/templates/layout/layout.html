@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org" th:fragment="dynamic(view)">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tổ chức layout</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css">
+</head>
+
+<body>
+<div class="container">
+<header>
+        <img th:src="@{/images/logo.png}" style="width: 150px" alt="Lỗi Ảnh" />
+    </header>
+    <nav th:insert="~{/layout/_menu.html :: navbar}"></nav>
+    <hr>
+    <main th:replace="${view}"></main>
+    <hr>
+ 
+    <footer >FPT Polytechnic &copy; 2021. All rights reserved.</footer>
+    
+</div>
+    
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

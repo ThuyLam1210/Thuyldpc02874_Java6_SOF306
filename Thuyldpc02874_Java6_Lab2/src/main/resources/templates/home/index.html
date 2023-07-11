@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello</title>
+</head>
+<body>
+    <img th:src="@{/images/logo.png}" alt="">
+    <nav th:replace="~{/layout/menu.html}"></nav>
+    <h1 th:text="${message}"></h1>
+    <ul th:object="@{sv}">
+        <li th:text="${sv.name}"></li>
+        <li th:text="*{marks}"></li>
+        <li th:text="*{contact.email}"></li>
+    </ul>
+</body>
+</html>
