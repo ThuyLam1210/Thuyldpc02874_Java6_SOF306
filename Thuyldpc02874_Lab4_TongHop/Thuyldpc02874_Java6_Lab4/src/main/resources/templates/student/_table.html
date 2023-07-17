@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Fullname</th>
+                <th>Email</th>
+                <th>Marks</th>
+                <th>Gender</th>
+                <th>Country</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr th:each="entry:${items}" th:object="${entry.value}"> -->
+            <tr th:each="entry : ${items}">
+                <!-- Lấy đối tượng Student từ entry.value -->
+                <td th:text="${entry.value.fullname}"></td>
+                <td th:text="${entry.value.email}"></td>
+                <td th:text="${entry.value.marks}"></td>
+                <td>
+                    <!-- Sử dụng biểu thức điều kiện để hiển thị giới tính -->
+                    <span th:if="${entry.value.gender}">Male</span>
+                    <span th:unless="${entry.value.gender}">Female</span>
+                </td>
+                <td th:text="${entry.value.country}"></td>
+                <td>
+                    <!-- Thêm các nút điều khiển -->
+                    <a th:href="@{/student/edit/{key}(key=${entry.key})}" class="btn btn-primary">Edit</a>
+                    <a th:href="@{/student/delete/{key}(key=${entry.key})}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+</html>
