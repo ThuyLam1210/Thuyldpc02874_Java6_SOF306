@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel</title>
+      <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Thư viện angular js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+
+    <!-- Thư viện SheetJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+    <!-- Thư viên file saver -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+</head>
+
+<body ng-app="app" ng-controller="excelCtrl">
+
+    <!-- <input type="file" onchange="angular.element(this).scope().import(this.files)"> -->
+    <div class="container">
+        <h3>IMPORT - EXPORT FILE EXCEL</h3>
+        <div class="form-group">
+            <label for="file">Chọn File:</label>
+            <input type="file" class="form-control" id="fileInput" ng-model="selectedFile">
+        </div>
+      
+        <button ng-click="import()" class="btn btn-primary">Import CSDL</button>
+        <button ng-click="export()" class="btn btn-info">Export Excel</button>
+    </div>
+
+
+    <!-- <script src="angular/excel-ctrl.js"></script> -->
+    <script>
+        var app = angular.module("app", []);
+
+        app.controller("excelCtrl", function ($scope, $http) {
+            $scope.import = function () {
+                var input = document.getElementById('fileInput');
+                var files = input.files;
+                if (files.length === 0) {
+                    console.log('Chưa chọn tệp để import.');
+                    return;
+                }
+                var file = files[0];
+
+                var reader = new FileReader();
+                reader.onloadend = async () => {
+                    var workbook = new ExcelJS.Workbook();
+                    await workbook.xlsx.load(reader.result);
+                    const worksheet = workbook.getWorksheet("Sheet1");
+                    worksheet.eachRow((row, index) => {
+                        if (index > 1) {
+                            let student = {
+                                email: row.getCell(1).value,
+                                fullname: row.getCell(2).value,
+                                marks: +row.getCell(3).value,
+                                gender: true && row.getCell(4).value,
+                                country: row.getCell(5).value
+                            }
+                            var url = "http://localhost:8080/rest/students";
+                            $http.post(url, student).then(resp => {
+                                console.log("Success", resp.data);
+                                // Sử dụng $timeout để chạy alert trong context AngularJS
+                                ;
+
+
+                            }).catch(error => {
+                                console.log("Error", error);
+                            })
+                        }
+                    })
+                }
+
+                reader.readAsArrayBuffer(file);
+                var successMessage = "Dữ liệu đã được import từ Excel thành công";
+                alert(successMessage);
+            }
+
+            $scope.export = function () {
+                // Tạo một mảng chứa dữ liệu từ cơ sở dữ liệu hoặc lấy dữ liệu từ API.
+                var dataToExport = [];
+
+                // Thực hiện request đến API hoặc cơ sở dữ liệu để lấy dữ liệu cần xuất ra Excel
+                var url = "http://localhost:8080/rest/students";
+                $http.get(url).then(resp => {
+                    // Gán dữ liệu lấy được vào mảng dataToExport
+                    dataToExport = resp.data;
+
+                    // Tạo một file Excel và lưu dữ liệu xuống máy tính
+                    var workbook = new ExcelJS.Workbook();
+                    var worksheet = workbook.addWorksheet("Sheet1");
+
+                    // Định dạng tiêu đề bảng (header)
+                    var headerRow = worksheet.addRow(["Email", "Fullname", "Marks", "Gender", "Country"]);
+                    headerRow.font = { bold: true };
+                    headerRow.fill = {
+                        type: "pattern",
+                        pattern: "solid",
+                        fgColor: { argb: "FFFFFFFF" } // Màu nền đỏ cho tiêu đề
+                    };
+
+                    // Thêm các ô dữ liệu vào hàng tiêu đề và định dạng màu nền trắng cho các ô dữ liệu
+                    headerRow.eachCell(cell => {
+                        cell.fill = {
+                            type: "pattern",
+                            pattern: "solid",
+                            fgColor: { argb: "ffa4ffa4" }, // Màu nền trắng cho các ô dữ liệu trong hàng tiêu đề
+                        };
+                        cell.border = { top: { style: "thin" }, bottom: { style: "thin" }, left: { style: "thin" }, right: { style: "thin" } };
+                    });
+
+                    // Thêm dữ liệu từ mảng dataToExport vào bảng Excel
+                    dataToExport.forEach(student => {
+                        var dataRow = worksheet.addRow([
+                            student.email,
+                            student.fullname,
+                            student.marks,
+                            student.gender,
+                            student.country
+                        ]);
+
+                        // Định dạng các ô dữ liệu
+                        dataRow.alignment = { vertical: "middle", horizontal: "left" }; // Căn giữa dữ liệu trong ô
+                        dataRow.eachCell(cell => {
+                            cell.border = { top: { style: "thin" }, bottom: { style: "thin" }, left: { style: "thin" }, right: { style: "thin" } }; // Định dạng đường viền cho ô
+                        });
+
+                        // Định dạng số cho cột điểm (Marks), ví dụ: "0.00" sẽ hiển thị số thập phân với 2 chữ số sau dấu thập phân.
+                        dataRow.getCell(3).numFmt = "0.00";
+                    });
+
+                    // Tính toán kích thước các cột và áp dụng định dạng tự động để giãn ra vừa với dữ liệu
+                    worksheet.columns.forEach(column => {
+                        var maxLength = 0;
+                        column.eachCell({ includeEmpty: true }, cell => {
+                            var columnLength = cell.value ? cell.value.toString().length : 10;
+                            if (columnLength > maxLength) {
+                                maxLength = columnLength;
+                            }
+                        });
+                        column.width = maxLength < 10 ? 10 : maxLength + 2; // Đảm bảo độ rộng tối thiểu là 10 và thêm một số padding
+                    });
+
+                    // Tạo một tệp Excel và tải xuống về máy tính
+                    workbook.xlsx.writeBuffer().then(function (buffer) {
+                        var data = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+                        var excelFileName = dataToExport.length === 0 ? "empty_students_data.xlsx" : "students_data.xlsx";
+                        saveAs(data, excelFileName);
+                    });
+                    // Hiển thị thông báo sau khi hoàn thành việc export dữ liệu
+                    var successMessage = dataToExport.length === 0 ? "Không có dữ liệu để xuất ra Excel." : "Dữ liệu đã được xuất ra Excel thành công.";
+                    alert(successMessage);
+                }).catch(error => {
+                    console.error("Error while fetching data:", error);
+                });
+            };
+
+        })
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+</head>
+
+<body ng-app="app" ng-controller="nameCtrl">
+
+    <div class="container">
+        <h2>RestFul Consumer - AngularJS</h2>
+        <div class="form">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" ng-model="form.email">
+            </div>
+            <div class="form-group">
+                <label for="fullname">Họ tên:</label>
+                <input type="text" class="form-control" id="fullname" ng-model="form.fullname">
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="male" ng-model="form.gender" ng-value="true">
+                    <label class="form-check-label" for="male">Nam</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="female" ng-model="form.gender" ng-value="false">
+                    <label class="form-check-label" for="female">Nữ</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="marks">Điểm:</label>
+                <input type="text" class="form-control" id="marks" ng-model="form.marks">
+            </div>
+
+            <div class="form-group">
+                <label for="country">Quốc gia:</label>
+                <select class="form-control" id="country" ng-model="form.country">
+                    <option value="VN">Việt Nam</option>
+                    <option value="US">United States</option>
+                </select>
+            </div>
+
+            <button ng-click="create()" type="submit" class="btn btn-primary">Tạo</button>
+            <button ng-click="update()" type="submit" class="btn btn-info">Cập nhật</button>
+            <button ng-click="delete(form.email)" type="submit" class="btn btn-danger">Xóa</button>
+            <button ng-click="reset()" type="submit" class="btn btn-primary">Đặt lại</button>
+        </div>
+        <br>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Họ tên</th>
+                    <th>Giới tính</th>
+                    <th>Điểm</th>
+                    <th>Email</th>
+                    <th>Quốc gia</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="stu in items">
+                    <td>{{stu.fullname}}</td>
+                    <td>{{stu.gender?'Nam':'Nữ'}}</td>
+                    <td>{{stu.marks}}</td>
+                    <td>{{stu.email}}</td>
+                    <td>{{stu.country}}</td>
+                    <td>
+                        <button ng-click="edit(stu.email)" class="btn btn-info">Chỉnh sửa</button>
+                        <button ng-click="delete(stu.email)" class="btn btn-danger">Xóa</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add Bootstrap JS -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <script src="angular/crud-ctrl.js"></script>
+
+</body>
+
+</html>

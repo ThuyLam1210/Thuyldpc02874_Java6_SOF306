@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Thư viện angular js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+    <style>
+        /* Thêm khoảng cách giữa các cột */
+        .row [class^="col-"] {
+            padding: 5px;
+        }
+    </style>
+    
+</head>
+
+<body ng-app="fileapp" ng-controller="ctrl">
+
+    <div class="container">
+        <h3>RESFUL - File Manager</h3>
+        <label>
+            Upload Files:
+            <input type="file" accept="image/*" multiple onchange="angular.element(this).scope().upload(this.files)">
+        </label>
+        <hr>
+        <div class="row">
+            <div class="col-md-4" ng-repeat="filename in filenames" title="Double click to delete">
+                <img width="300px" height="250px" ng-src="{{url(filename)}}" ng-dblclick="delete(filename)" alt="">
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+
+        var app = angular.module("fileapp", ['ngRoute']);
+        app.controller("ctrl", function ($scope, $http) {
+            var url = `http://localhost:8080/rest/files/images`;
+            $scope.filenames = [];
+            $scope.url = function (filename) {
+                return `${url}/${filename}`;
+            }
+            $scope.list = function () {
+                $http.get(url).then(resp => {
+                    $scope.filesnames = resp.data;
+                }).catch(error => {
+                    console.log("Error", error);
+                })
+            }
+            $scope.upload = function (files) {
+                var form = new FormData();
+                for (var i = 0; i < files.length; i++) {
+                    form.append("files", files[i]);
+                    //alert(files[i]);
+                }
+
+                $http.post(url, form, {
+                    transformRequest: angular.identity,
+                    headers: { "Content-Type": undefined },
+                }).then(resp => {
+                    alert(resp.data);
+                    $scope.filenames.push(...resp.data);
+                }).catch(error => {
+                    console.log("Errors", error);
+                })
+            }
+            $scope.delete = function (filename) {
+                $http.delete(`${url}/${filename}`).then(resp => {
+                    let i = $scope.filenames.findIndex(name => name == filename);
+                    $scope.filenames.splice(i, 1);
+                }).catch(error => {
+                    console.log("Error", error);
+                })
+            }
+            $scope.list();
+        })
+    </script>
+</body>
+
+</html>
